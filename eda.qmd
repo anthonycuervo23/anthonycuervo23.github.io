@@ -29,9 +29,6 @@ El análisis combina tablas, gráficos y comentarios en lenguaje natural, siguie
 #| message: false
 #| warning: false
 
-install.packages("ggplot2")
-install.packages("forcats")
-install.packages("scales")
 library(readr)
 library(dplyr)
 library(tidyr)
