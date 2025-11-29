@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="">
 
-<title>Factores de riesgo de cáncer</title>
+<title>2&nbsp; Introducción – Factores de riesgo de cáncer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./introduccion.html" rel="next">
+<link href="./comprension-datos.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bdd1b73c83b543fce810b116c61438b3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4ff66e45b39d49436fe97d3fe27b9920.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Portada</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduccion.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,13 +114,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Portada</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./introduccion.html" class="sidebar-item-text sidebar-link">
+  <a href="./introduccion.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
@@ -152,159 +152,284 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#contexto-y-problema-de-negocio" id="toc-contexto-y-problema-de-negocio" class="nav-link active" data-scroll-target="#contexto-y-problema-de-negocio"><span class="header-section-number">2.1</span> Contexto y problema de negocio</a></li>
+  <li><a href="#objetivos-del-proyecto" id="toc-objetivos-del-proyecto" class="nav-link" data-scroll-target="#objetivos-del-proyecto"><span class="header-section-number">2.2</span> Objetivos del proyecto</a>
+  <ul class="collapse">
+  <li><a href="#objetivo-general" id="toc-objetivo-general" class="nav-link" data-scroll-target="#objetivo-general"><span class="header-section-number">2.2.1</span> Objetivo general</a></li>
+  <li><a href="#objetivos-específicos" id="toc-objetivos-específicos" class="nav-link" data-scroll-target="#objetivos-específicos"><span class="header-section-number">2.2.2</span> Objetivos específicos</a></li>
+  </ul></li>
+  <li><a href="#preguntas-de-negocio-y-de-análisis-de-datos" id="toc-preguntas-de-negocio-y-de-análisis-de-datos" class="nav-link" data-scroll-target="#preguntas-de-negocio-y-de-análisis-de-datos"><span class="header-section-number">2.3</span> Preguntas de negocio y de análisis de datos</a></li>
+  <li><a href="#metodología-y-ciclo-de-vida" id="toc-metodología-y-ciclo-de-vida" class="nav-link" data-scroll-target="#metodología-y-ciclo-de-vida"><span class="header-section-number">2.4</span> Metodología y ciclo de vida</a></li>
+  <li><a href="#fuentes-de-datos-y-estructura-del-dataset" id="toc-fuentes-de-datos-y-estructura-del-dataset" class="nav-link" data-scroll-target="#fuentes-de-datos-y-estructura-del-dataset"><span class="header-section-number">2.5</span> Fuentes de datos y estructura del dataset</a>
+  <ul class="collapse">
+  <li><a href="#dataset-principal-cancer-risk-factors-kaggle" id="toc-dataset-principal-cancer-risk-factors-kaggle" class="nav-link" data-scroll-target="#dataset-principal-cancer-risk-factors-kaggle"><span class="header-section-number">2.5.1</span> Dataset principal: <em>Cancer Risk Factors</em> (Kaggle)</a></li>
+  </ul></li>
+  <li><a href="#alcance-del-análisis" id="toc-alcance-del-análisis" class="nav-link" data-scroll-target="#alcance-del-análisis"><span class="header-section-number">2.6</span> Alcance del análisis</a></li>
+  <li><a href="#tecnología-y-herramientas" id="toc-tecnología-y-herramientas" class="nav-link" data-scroll-target="#tecnología-y-herramientas"><span class="header-section-number">2.7</span> Tecnología y herramientas</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io/blob/main/introduccion.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Factores de riesgo de cáncer</h1></header>
+<main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header">
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción</span></h1>
+</div>
 
-<p class="subtitle lead">Proyecto de Fundamentos de la Ciencia de los Datos</p>
-<p class="author"></p>
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
 
 </header>
 
 
-<style>
-.cover-page {
-  position: relative;
-  min-height: 100vh;
-  padding: 2rem 3rem;
-  box-sizing: border-box;
-  overflow: hidden;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
+<section id="contexto-y-problema-de-negocio" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="contexto-y-problema-de-negocio"><span class="header-section-number">2.1</span> Contexto y problema de negocio</h2>
+<p>El cáncer es una de las principales causas de morbilidad y mortalidad en el mundo. Más allá del diagnóstico clínico individual, resulta clave comprender <strong>qué combinación de factores de estilo de vida, características demográficas y antecedentes</strong> se asocia con un mayor riesgo, para apoyar la <strong>prevención y la educación sanitaria</strong> a nivel poblacional.</p>
+<p>Desde la perspectiva de la ciencia de los datos, este proyecto se sitúa inicialmente en las fases de <strong>Comprensión del Negocio</strong> y <strong>Comprensión de los Datos</strong> del ciclo de vida de un proyecto de data science, siguiendo la filosofía de metodologías como <strong>CRISP-DM</strong>. El objetivo no es construir un sistema clínico real, sino utilizar un conjunto de datos sintético y realista para entender mejor:</p>
+<ul>
+<li>Cómo se estructura la información disponible sobre factores de riesgo.<br>
+</li>
+<li>Qué patrones básicos aparecen en los datos cuando los exploramos de forma sistemática.<br>
+</li>
+<li>Cómo empezar a contar una <strong>historia con datos</strong> (<em>data storytelling</em>) que permita comunicar estos hallazgos a perfiles no técnicos (por ejemplo, responsables de salud pública).</li>
+</ul>
+<p>En este contexto, nos planteamos la siguiente <strong>decisión de negocio</strong>:</p>
+<blockquote class="blockquote">
+<p>¿Cómo podemos utilizar los datos disponibles sobre estilo de vida, demografía y antecedentes para <strong>identificar grupos de población con mayor riesgo de cáncer</strong> y, en consecuencia, <strong>orientar mejor los recursos de prevención y educación sanitaria</strong>?</p>
+</blockquote>
+</section>
+<section id="objetivos-del-proyecto" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="objetivos-del-proyecto"><span class="header-section-number">2.2</span> Objetivos del proyecto</h2>
+<section id="objetivo-general" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="objetivo-general"><span class="header-section-number">2.2.1</span> Objetivo general</h3>
+<p>Desarrollar un proyecto de ciencia de datos que permita <strong>explorar, describir y explicar</strong> el riesgo de cáncer a partir de diversas variables de estilo de vida, demográficas y de antecedentes, identificando <strong>patrones y perfiles de riesgo</strong> que sirvan como ejemplo de aplicación de la metodología de la asignatura.</p>
+</section>
+<section id="objetivos-específicos" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="objetivos-específicos"><span class="header-section-number">2.2.2</span> Objetivos específicos</h3>
+<ul>
+<li>Definir el <strong>problema de negocio</strong> y las <strong>preguntas de análisis</strong> relacionadas con el riesgo de cáncer.<br>
+</li>
+<li><strong>Comprender y organizar el conjunto de datos</strong>, identificando su estructura, tipos de variables y posibles problemas de calidad.<br>
+</li>
+<li>Realizar un <strong>Análisis Exploratorio de Datos (EDA)</strong>:
+<ul>
+<li>Análisis <strong>univariado</strong> de variables seleccionadas (por ejemplo, edad, IMC, score de riesgo).<br>
+</li>
+<li>Análisis <strong>bi/multivariado</strong> de relaciones relevantes (por ejemplo, tabaquismo y consumo de alcohol frente al riesgo).<br>
+</li>
+<li>Detección y comentario de <strong>datos faltantes, valores atípicos y posibles problemas de calidad</strong>.<br>
+</li>
+</ul></li>
+<li>Aplicar, en fases posteriores del proyecto, <strong>modelos explicativos y predictivos</strong> sencillos:
+<ul>
+<li>Modelos de <strong>regresión</strong> con <code>Overall_Risk_Score</code> como variable objetivo.<br>
+</li>
+<li>Modelos de <strong>regresión logística</strong> con <code>Risk_Level</code> como variable objetivo categórica.<br>
+</li>
+<li>Métodos de <strong>clusterización</strong> para identificar perfiles de riesgo.<br>
+</li>
+</ul></li>
+<li>Elaborar un <strong>informe reproducible en Quarto</strong> que combine código en R, resultados (tablas y gráficos) y explicaciones en <strong>lenguaje de negocio</strong>, conectando los análisis con la toma de decisiones en prevención y educación sanitaria.</li>
+</ul>
+</section>
+</section>
+<section id="preguntas-de-negocio-y-de-análisis-de-datos" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="preguntas-de-negocio-y-de-análisis-de-datos"><span class="header-section-number">2.3</span> Preguntas de negocio y de análisis de datos</h2>
+<p>A partir del contexto anterior, planteamos un conjunto inicial de preguntas que guiarán el análisis:</p>
+<ol type="1">
+<li><strong>Distribución del riesgo</strong>
+<ul>
+<li>¿Cómo se distribuye el <code>Overall_Risk_Score</code> en la población del dataset?<br>
+</li>
+<li>¿Qué proporción de individuos se encuentra en los niveles de riesgo <code>Low</code>, <code>Medium</code> y <code>High</code> (<code>Risk_Level</code>)?</li>
+</ul></li>
+<li><strong>Factores individuales de riesgo (análisis univariado)</strong>
+<ul>
+<li>¿Cuál es la distribución de variables como <code>Age</code>, <code>BMI</code>, <code>Smoking</code>, <code>Alcohol_Use</code> o <code>Physical_Activity</code>?<br>
+</li>
+<li>¿Existen outliers evidentes o valores extremos que debamos comentar?</li>
+</ul></li>
+<li><strong>Relaciones entre factores y riesgo (análisis bi/multivariado)</strong>
+<ul>
+<li>¿Cómo cambia el <code>Overall_Risk_Score</code> según el nivel de tabaquismo y consumo de alcohol?<br>
+</li>
+<li>¿Hay diferencias claras en el nivel de riesgo según la presencia de antecedentes familiares (<code>Family_History</code>) u otros factores genéticos/infecciosos?</li>
+</ul></li>
+<li><strong>Perfiles de riesgo</strong>
+<ul>
+<li>¿Podemos identificar, a partir de los datos, ciertos <strong>perfiles típicos</strong> de riesgo, como:
+<ul>
+<li>Riesgo elevado principalmente asociado al <strong>estilo de vida</strong>.<br>
+</li>
+<li>Riesgo elevado más relacionado con <strong>antecedentes familiares o factores genéticos</strong>.<br>
+</li>
+<li>Riesgo bajo o moderado con estilos de vida más saludables.</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>Estas preguntas se irán refinando a lo largo del EDA y del modelado, siguiendo el enfoque iterativo típico de la ciencia de los datos.</p>
+</section>
+<section id="metodología-y-ciclo-de-vida" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="metodología-y-ciclo-de-vida"><span class="header-section-number">2.4</span> Metodología y ciclo de vida</h2>
+<p>El proyecto se inspira en el estándar <strong>CRISP-DM (Cross-Industry Standard Process for Data Mining)</strong>, que estructura un proyecto de datos en fases:</p>
+<ol type="1">
+<li><strong>Comprensión del Negocio</strong><br>
+</li>
+<li><strong>Comprensión de los Datos</strong><br>
+</li>
+<li><strong>Preparación de los Datos</strong><br>
+</li>
+<li><strong>Modelado</strong><br>
+</li>
+<li><strong>Evaluación</strong><br>
+</li>
+<li><strong>Implantación / Comunicación de resultados</strong></li>
+</ol>
+<p>En este proyecto se recorrerán estas fases de forma progresiva:</p>
+<ul>
+<li><strong>Comprensión del Negocio:</strong> definición del problema, objetivos y preguntas de análisis.<br>
+</li>
+<li><strong>Comprensión de los Datos:</strong> estudio de la fuente de datos, estructura, tipos de variables y calidad de la información.<br>
+</li>
+<li><strong>Preparación de los Datos:</strong> tratamiento de valores faltantes, recodificación de variables categóricas, creación de nuevas variables útiles, etc.<br>
+</li>
+<li><strong>Modelado y Evaluación:</strong> aplicación de modelos de regresión, regresión logística y clusterización, junto con su evaluación.<br>
+</li>
+<li><strong>Comunicación de resultados:</strong> elaboración de gráficos, tablas y explicaciones en lenguaje natural, siguiendo principios de <em>data storytelling</em>.</li>
+</ul>
+<p>El <strong>Análisis Exploratorio de Datos (EDA)</strong> tendrá un papel central: combinará estadísticas descriptivas, visualizaciones y comentarios para construir una visión clara de “qué nos dicen los datos” antes de pasar al modelado.</p>
+</section>
+<section id="fuentes-de-datos-y-estructura-del-dataset" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="fuentes-de-datos-y-estructura-del-dataset"><span class="header-section-number">2.5</span> Fuentes de datos y estructura del dataset</h2>
+<section id="dataset-principal-cancer-risk-factors-kaggle" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="dataset-principal-cancer-risk-factors-kaggle"><span class="header-section-number">2.5.1</span> Dataset principal: <em>Cancer Risk Factors</em> (Kaggle)</h3>
+<p>El proyecto utiliza el dataset <strong>“<a href="https://www.kaggle.com/datasets/tarekmasryo/cancer-risk-factors-dataset">Cancer Risk Factors</a>”</strong>, disponible públicamente en <strong><a href="https://www.kaggle.com/">Kaggle</a></strong>. Se trata de un conjunto de datos sintético diseñado para fines educativos, que simula información de pacientes y sus factores de riesgo asociados al cáncer.</p>
+<p>Características principales del dataset:</p>
+<ul>
+<li>Aproximadamente <strong>2.000 registros</strong>, cada uno correspondiente a un paciente.<br>
+</li>
+<li>En torno a <strong>20 variables</strong>, entre ellas:</li>
+</ul>
+<p><strong>Variables demográficas</strong></p>
+<ul>
+<li><code>Age</code> – edad.<br>
+</li>
+<li><code>Gender</code> – género.<br>
+</li>
+<li><code>Patient_ID</code> – identificador del paciente.</li>
+</ul>
+<p><strong>Variables de estilo de vida</strong></p>
+<ul>
+<li><code>Smoking</code> – nivel de tabaquismo.<br>
+</li>
+<li><code>Alcohol_Use</code> – consumo de alcohol.<br>
+</li>
+<li><code>Obesity</code> – indicador relacionado con obesidad.<br>
+</li>
+<li><code>Diet_Red_Meat</code> – consumo de carne roja.<br>
+</li>
+<li><code>Diet_Salted_Processed</code> – consumo de alimentos salados o procesados.<br>
+</li>
+<li><code>Fruit_Veg_Intake</code> – consumo de frutas y verduras.<br>
+</li>
+<li><code>Physical_Activity</code> – nivel de actividad física.</li>
+</ul>
+<p><strong>Factores ambientales, laborales y genéticos</strong></p>
+<ul>
+<li><code>Air_Pollution</code> – exposición a contaminación del aire.<br>
+</li>
+<li><code>Occupational_Hazards</code> – exposición a riesgos laborales.<br>
+</li>
+<li><code>Family_History</code> – antecedentes familiares relacionados con cáncer.<br>
+</li>
+<li><code>BRCA_Mutation</code> – presencia de mutaciones genéticas específicas.<br>
+</li>
+<li><code>H_Pylori_Infection</code> – información sobre infección por <em>H. pylori</em>.<br>
+</li>
+<li><code>Calcium_Intake</code> y otras variables relacionadas.</li>
+</ul>
+<p><strong>Variables derivadas y de salida</strong></p>
+<ul>
+<li><code>BMI</code> – Índice de Masa Corporal.<br>
+</li>
+<li><code>Overall_Risk_Score</code> – <strong>score continuo</strong> que resume el riesgo global en función de los factores anteriores.<br>
+</li>
+<li><code>Risk_Level</code> – <strong>nivel de riesgo categórico</strong> (<code>Low</code>, <code>Medium</code>, <code>High</code>).</li>
+</ul>
+<p>En la terminología de la asignatura, trabajaremos con una mezcla de <strong>variables numéricas</strong> (continuas/discretas) y <strong>variables categóricas</strong> (nominales/ordinales). Esta clasificación será clave para elegir los gráficos adecuados y las técnicas estadísticas más apropiadas en el EDA.</p>
+</section>
+</section>
+<section id="alcance-del-análisis" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="alcance-del-análisis"><span class="header-section-number">2.6</span> Alcance del análisis</h2>
+<p>El proyecto completo abarcará:</p>
+<ol type="1">
+<li><strong>Comprensión del negocio y de los datos</strong>
+<ul>
+<li>Contexto, problema de negocio, objetivos y preguntas de análisis.<br>
+</li>
+<li>Descripción de la fuente de datos y de la estructura del dataset.</li>
+</ul></li>
+<li><strong>Análisis Exploratorio de Datos (EDA)</strong>
+<ul>
+<li>Análisis univariado y bi/multivariado.<br>
+</li>
+<li>Evaluación de la calidad de los datos (valores faltantes, duplicados, outliers).<br>
+</li>
+<li>Identificación de patrones relevantes y de posibles perfiles de riesgo.</li>
+</ul></li>
+<li><strong>Modelado y evaluación</strong>
+<ul>
+<li>Modelos de regresión y regresión logística para explicar y predecir el riesgo.<br>
+</li>
+<li>Análisis de clusterización para identificar perfiles de pacientes.<br>
+</li>
+<li>Evaluación e interpretación de los resultados desde una perspectiva de negocio.</li>
+</ul></li>
+<li><strong>Comunicación de resultados</strong>
+<ul>
+<li>Elaboración de visualizaciones y narrativas que permitan responder de forma clara a la pregunta:<br>
+&gt; <strong>¿Qué nos dicen los datos sobre los factores de riesgo de cáncer en este conjunto de pacientes?</strong></li>
+</ul></li>
+</ol>
+</section>
+<section id="tecnología-y-herramientas" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="tecnología-y-herramientas"><span class="header-section-number">2.7</span> Tecnología y herramientas</h2>
+<p>Para alinear el proyecto con las herramientas trabajadas en clase, se utilizarán:</p>
+<ul>
+<li><strong>Lenguaje:</strong> R.<br>
+</li>
+<li><strong>Entorno de desarrollo:</strong> RStudio.<br>
+</li>
+<li><strong>Informes reproducibles:</strong> Quarto, generando una web estática en formato HTML.<br>
+</li>
+<li><strong>Publicación:</strong> GitHub Pages, utilizando el repositorio: <a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io">anthonycuervo23.github.io</a>.</li>
+</ul>
+<p><strong>Librerías principales de R</strong></p>
+<ul>
+<li><code>readr</code> para lectura de ficheros CSV.<br>
+</li>
+<li><code>dplyr</code> y el ecosistema <strong>tidyverse</strong> para manipulación y transformación de datos.<br>
+</li>
+<li><code>ggplot2</code> para la visualización de datos (gráficos para EDA y <em>data storytelling</em>).</li>
+</ul>
+<p>En fases posteriores se podrán incorporar librerías adicionales para modelado y evaluación, siempre siguiendo la metodología vista en la asignatura.</p>
 
-/* Logo UAX arriba a la izquierda */
-.uax-logo {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  max-width: 260px;
-  height: auto;
-  z-index: 10;
-}
 
-/* Imagen de fondo traslúcida */
-.cover-hero-image {
-  position: absolute;
-  inset: 0;
-  background-image: url("images/data-analyst.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.35;
-  filter: saturate(1.1);
-}
-
-/* Capa para oscurecer un poco el fondo y dar contraste al card */
-.cover-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(0,0,0,0.35), rgba(0,0,0,0.75));
-}
-
-/* Contenedor principal del contenido */
-.cover-content-wrapper {
-  position: relative;
-  z-index: 20;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Empujar el card un poco hacia abajo del centro */
-.cover-content-inner {
-  margin-top: 4rem;
-}
-
-/* Card azul con título y autor */
-.cover-card {
-  background: rgba(0, 76, 153, 0.95);
-  border-radius: 1.75rem;
-  padding: 2.5rem 3rem;
-  max-width: 780px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-  color: #ffffff;
-  text-align: center;
-}
-
-.cover-card-title {
-  font-size: clamp(1.9rem, 3vw, 2.4rem);
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-
-.cover-card-subtitle {
-  font-size: clamp(1rem, 1.6vw, 1.2rem);
-  margin-bottom: 1.75rem;
-  opacity: 0.95;
-}
-
-.cover-card-meta {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  opacity: 0.95;
-}
-
-.cover-footer {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 2rem;
-  z-index: 20;
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.75);
-}
-
-@media (max-width: 768px) {
-  .cover-page {
-    padding: 1.5rem;
-  }
-
-  .uax-logo {
-    max-width: 200px;
-  }
-
-  .cover-card {
-    padding: 1.75rem 1.5rem;
-  }
-
-  .cover-footer {
-    right: 1.5rem;
-    left: 1.5rem;
-    text-align: center;
-  }
-}
-</style>
-<div class="cover-page">
-<p><img src="images/uax_logo.png" alt="UAX - Universidad Alfonso X el Sabio" class="uax-logo"></p>
-<div class="cover-hero-image">
-
-</div>
-<div class="cover-hero-overlay">
-
-</div>
-<div class="cover-content-wrapper">
-<div class="cover-content-inner">
-<div class="cover-card">
-<div class="cover-card-title">
-<p>Factores de riesgo de cáncer:<br> análisis exploratorio y explicativo con datos públicos de Kaggle</p>
-</div>
-<div class="cover-card-subtitle">
-<p>Proyecto de la asignatura <strong>Fundamentos de la Ciencia de los Datos</strong></p>
-</div>
-<div class="cover-card-meta">
-<p><strong>Autor:</strong> Jean Cuervo<br> <strong>Universidad Alfonso X el Sabio (UAX)</strong><br> Grado en Inteligencia Artificial y Computación</p>
-</div>
-</div>
-</div>
-</div>
-<div class="cover-footer">
-<p>Curso académico 2025–2026</p>
-</div>
-</div>
-
-
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -707,12 +832,15 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
-<nav class="page-navigation column-page-right">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Portada">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Portada</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introduccion.html" class="pagination-link" aria-label="Introducción">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./comprension-datos.html" class="pagination-link" aria-label="Comprensión de los datos">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Comprensión de los datos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -724,7 +852,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io/blob/main/introduccion.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
