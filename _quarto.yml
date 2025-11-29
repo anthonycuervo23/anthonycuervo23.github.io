@@ -35,5 +35,9 @@ format:
     code-summary: "Mostrar/Ocultar código"
     page-layout: full
     smooth-scroll: true
+  pdf:
+    documentclass: book
+    toc: true
+    number-sections: true
 
 editor: visual
