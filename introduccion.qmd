@@ -1,0 +1,176 @@
+---
+title: "Introducción"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+
+## Contexto y problema de negocio
+
+El cáncer es una de las principales causas de morbilidad y mortalidad en el mundo. Más allá del diagnóstico clínico individual, resulta clave comprender **qué combinación de factores de estilo de vida, características demográficas y antecedentes** se asocia con un mayor riesgo, para apoyar la **prevención y la educación sanitaria** a nivel poblacional.
+
+Desde la perspectiva de la ciencia de los datos, este proyecto se sitúa inicialmente en las fases de **Comprensión del Negocio** y **Comprensión de los Datos** del ciclo de vida de un proyecto de data science, siguiendo la filosofía de metodologías como **CRISP-DM**. El objetivo no es construir un sistema clínico real, sino utilizar un conjunto de datos sintético y realista para entender mejor:
+
+- Cómo se estructura la información disponible sobre factores de riesgo.  
+- Qué patrones básicos aparecen en los datos cuando los exploramos de forma sistemática.  
+- Cómo empezar a contar una **historia con datos** (*data storytelling*) que permita comunicar estos hallazgos a perfiles no técnicos (por ejemplo, responsables de salud pública).
+
+En este contexto, nos planteamos la siguiente **decisión de negocio**:
+
+> ¿Cómo podemos utilizar los datos disponibles sobre estilo de vida, demografía y antecedentes para **identificar grupos de población con mayor riesgo de cáncer** y, en consecuencia, **orientar mejor los recursos de prevención y educación sanitaria**?
+
+
+## Objetivos del proyecto
+
+### Objetivo general
+
+Desarrollar un proyecto de ciencia de datos que permita **explorar, describir y explicar** el riesgo de cáncer a partir de diversas variables de estilo de vida, demográficas y de antecedentes, identificando **patrones y perfiles de riesgo** que sirvan como ejemplo de aplicación de la metodología de la asignatura.
+
+### Objetivos específicos
+
+- Definir el **problema de negocio** y las **preguntas de análisis** relacionadas con el riesgo de cáncer.  
+- **Comprender y organizar el conjunto de datos**, identificando su estructura, tipos de variables y posibles problemas de calidad.  
+- Realizar un **Análisis Exploratorio de Datos (EDA)**:
+  - Análisis **univariado** de variables seleccionadas (por ejemplo, edad, IMC, score de riesgo).  
+  - Análisis **bi/multivariado** de relaciones relevantes (por ejemplo, tabaquismo y consumo de alcohol frente al riesgo).  
+  - Detección y comentario de **datos faltantes, valores atípicos y posibles problemas de calidad**.  
+- Aplicar, en fases posteriores del proyecto, **modelos explicativos y predictivos** sencillos:
+  - Modelos de **regresión** con `Overall_Risk_Score` como variable objetivo.  
+  - Modelos de **regresión logística** con `Risk_Level` como variable objetivo categórica.  
+  - Métodos de **clusterización** para identificar perfiles de riesgo.  
+- Elaborar un **informe reproducible en Quarto** que combine código en R, resultados (tablas y gráficos) y explicaciones en **lenguaje de negocio**, conectando los análisis con la toma de decisiones en prevención y educación sanitaria.
+
+
+## Preguntas de negocio y de análisis de datos
+
+A partir del contexto anterior, planteamos un conjunto inicial de preguntas que guiarán el análisis:
+
+1. **Distribución del riesgo**  
+   - ¿Cómo se distribuye el `Overall_Risk_Score` en la población del dataset?  
+   - ¿Qué proporción de individuos se encuentra en los niveles de riesgo `Low`, `Medium` y `High` (`Risk_Level`)?  
+
+2. **Factores individuales de riesgo (análisis univariado)**  
+   - ¿Cuál es la distribución de variables como `Age`, `BMI`, `Smoking`, `Alcohol_Use` o `Physical_Activity`?  
+   - ¿Existen outliers evidentes o valores extremos que debamos comentar?
+
+3. **Relaciones entre factores y riesgo (análisis bi/multivariado)**  
+   - ¿Cómo cambia el `Overall_Risk_Score` según el nivel de tabaquismo y consumo de alcohol?  
+   - ¿Hay diferencias claras en el nivel de riesgo según la presencia de antecedentes familiares (`Family_History`) u otros factores genéticos/infecciosos?
+
+4. **Perfiles de riesgo**  
+   - ¿Podemos identificar, a partir de los datos, ciertos **perfiles típicos** de riesgo, como:
+     - Riesgo elevado principalmente asociado al **estilo de vida**.  
+     - Riesgo elevado más relacionado con **antecedentes familiares o factores genéticos**.  
+     - Riesgo bajo o moderado con estilos de vida más saludables.
+
+Estas preguntas se irán refinando a lo largo del EDA y del modelado, siguiendo el enfoque iterativo típico de la ciencia de los datos.
+
+
+## Metodología y ciclo de vida
+
+El proyecto se inspira en el estándar **CRISP-DM (Cross-Industry Standard Process for Data Mining)**, que estructura un proyecto de datos en fases:
+
+1. **Comprensión del Negocio**  
+2. **Comprensión de los Datos**  
+3. **Preparación de los Datos**  
+4. **Modelado**  
+5. **Evaluación**  
+6. **Implantación / Comunicación de resultados**
+
+En este proyecto se recorrerán estas fases de forma progresiva:
+
+- **Comprensión del Negocio:** definición del problema, objetivos y preguntas de análisis.  
+- **Comprensión de los Datos:** estudio de la fuente de datos, estructura, tipos de variables y calidad de la información.  
+- **Preparación de los Datos:** tratamiento de valores faltantes, recodificación de variables categóricas, creación de nuevas variables útiles, etc.  
+- **Modelado y Evaluación:** aplicación de modelos de regresión, regresión logística y clusterización, junto con su evaluación.  
+- **Comunicación de resultados:** elaboración de gráficos, tablas y explicaciones en lenguaje natural, siguiendo principios de *data storytelling*.
+
+El **Análisis Exploratorio de Datos (EDA)** tendrá un papel central: combinará estadísticas descriptivas, visualizaciones y comentarios para construir una visión clara de “qué nos dicen los datos” antes de pasar al modelado.
+
+
+## Fuentes de datos y estructura del dataset
+
+### Dataset principal: *Cancer Risk Factors* (Kaggle)
+
+El proyecto utiliza el dataset **“[Cancer Risk Factors](https://www.kaggle.com/datasets/tarekmasryo/cancer-risk-factors-dataset)”**, disponible públicamente en **[Kaggle](https://www.kaggle.com/)**. Se trata de un conjunto de datos sintético diseñado para fines educativos, que simula información de pacientes y sus factores de riesgo asociados al cáncer.
+
+Características principales del dataset:
+
+- Aproximadamente **2.000 registros**, cada uno correspondiente a un paciente.  
+- En torno a **20 variables**, entre ellas:
+
+**Variables demográficas**
+
+- `Age` – edad.  
+- `Gender` – género.  
+- `Patient_ID` – identificador del paciente.
+
+**Variables de estilo de vida**
+
+- `Smoking` – nivel de tabaquismo.  
+- `Alcohol_Use` – consumo de alcohol.  
+- `Obesity` – indicador relacionado con obesidad.  
+- `Diet_Red_Meat` – consumo de carne roja.  
+- `Diet_Salted_Processed` – consumo de alimentos salados o procesados.  
+- `Fruit_Veg_Intake` – consumo de frutas y verduras.  
+- `Physical_Activity` – nivel de actividad física.
+
+**Factores ambientales, laborales y genéticos**
+
+- `Air_Pollution` – exposición a contaminación del aire.  
+- `Occupational_Hazards` – exposición a riesgos laborales.  
+- `Family_History` – antecedentes familiares relacionados con cáncer.  
+- `BRCA_Mutation` – presencia de mutaciones genéticas específicas.  
+- `H_Pylori_Infection` – información sobre infección por *H. pylori*.  
+- `Calcium_Intake` y otras variables relacionadas.
+
+**Variables derivadas y de salida**
+
+- `BMI` – Índice de Masa Corporal.  
+- `Overall_Risk_Score` – **score continuo** que resume el riesgo global en función de los factores anteriores.  
+- `Risk_Level` – **nivel de riesgo categórico** (`Low`, `Medium`, `High`).
+
+En la terminología de la asignatura, trabajaremos con una mezcla de **variables numéricas** (continuas/discretas) y **variables categóricas** (nominales/ordinales). Esta clasificación será clave para elegir los gráficos adecuados y las técnicas estadísticas más apropiadas en el EDA.
+
+
+## Alcance del análisis
+
+El proyecto completo abarcará:
+
+1. **Comprensión del negocio y de los datos**  
+   - Contexto, problema de negocio, objetivos y preguntas de análisis.  
+   - Descripción de la fuente de datos y de la estructura del dataset.
+
+2. **Análisis Exploratorio de Datos (EDA)**  
+   - Análisis univariado y bi/multivariado.  
+   - Evaluación de la calidad de los datos (valores faltantes, duplicados, outliers).  
+   - Identificación de patrones relevantes y de posibles perfiles de riesgo.
+
+3. **Modelado y evaluación**  
+   - Modelos de regresión y regresión logística para explicar y predecir el riesgo.  
+   - Análisis de clusterización para identificar perfiles de pacientes.  
+   - Evaluación e interpretación de los resultados desde una perspectiva de negocio.
+
+4. **Comunicación de resultados**  
+   - Elaboración de visualizaciones y narrativas que permitan responder de forma clara a la pregunta:  
+     > **¿Qué nos dicen los datos sobre los factores de riesgo de cáncer en este conjunto de pacientes?**
+
+
+## Tecnología y herramientas
+
+Para alinear el proyecto con las herramientas trabajadas en clase, se utilizarán:
+
+- **Lenguaje:** R.  
+- **Entorno de desarrollo:** RStudio.  
+- **Informes reproducibles:** Quarto, generando una web estática en formato HTML.  
+- **Publicación:** GitHub Pages, utilizando el repositorio: 
+[anthonycuervo23.github.io](https://github.com/anthonycuervo23/anthonycuervo23.github.io).
+
+**Librerías principales de R**
+
+- `readr` para lectura de ficheros CSV.  
+- `dplyr` y el ecosistema **tidyverse** para manipulación y transformación de datos.  
+- `ggplot2` para la visualización de datos (gráficos para EDA y *data storytelling*).  
+
+En fases posteriores se podrán incorporar librerías adicionales para modelado y evaluación, siempre siguiendo la metodología vista en la asignatura.

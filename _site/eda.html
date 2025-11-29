@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Análisis exploratorio de los datos (EDA) – Factores de riesgo de cáncer</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./comprension-datos.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e22fbe6e69edb8577f7b7bd0719516f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./comprension-datos.html">Datos</a></li><li class="breadcrumb-item"><a href="./eda.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Análisis exploratorio de los datos (EDA)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Factores de riesgo de cáncer</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Portada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduccion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comprension-datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Comprensión de los datos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Análisis exploratorio de los datos (EDA)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introducción-al-eda" id="toc-introducción-al-eda" class="nav-link active" data-scroll-target="#introducción-al-eda"><span class="header-section-number">4.1</span> 1. Introducción al EDA</a></li>
+  <li><a href="#preparación-carga-de-datos-y-librerías" id="toc-preparación-carga-de-datos-y-librerías" class="nav-link" data-scroll-target="#preparación-carga-de-datos-y-librerías"><span class="header-section-number">4.2</span> 2. Preparación: carga de datos y librerías</a></li>
+  <li><a href="#análisis-univariado-de-variables-numéricas" id="toc-análisis-univariado-de-variables-numéricas" class="nav-link" data-scroll-target="#análisis-univariado-de-variables-numéricas"><span class="header-section-number">4.3</span> 3. Análisis univariado de variables numéricas</a>
+  <ul class="collapse">
+  <li><a href="#resumen-estadístico-general" id="toc-resumen-estadístico-general" class="nav-link" data-scroll-target="#resumen-estadístico-general"><span class="header-section-number">4.3.1</span> 3.1. Resumen estadístico general</a></li>
+  <li><a href="#histogramas-de-variables-seleccionadas" id="toc-histogramas-de-variables-seleccionadas" class="nav-link" data-scroll-target="#histogramas-de-variables-seleccionadas"><span class="header-section-number">4.3.2</span> 3.2. Histogramas de variables seleccionadas</a></li>
+  </ul></li>
+  <li><a href="#análisis-univariado-de-variables-categóricas" id="toc-análisis-univariado-de-variables-categóricas" class="nav-link" data-scroll-target="#análisis-univariado-de-variables-categóricas"><span class="header-section-number">4.4</span> 4. Análisis univariado de variables categóricas</a>
+  <ul class="collapse">
+  <li><a href="#tablas-de-frecuencias" id="toc-tablas-de-frecuencias" class="nav-link" data-scroll-target="#tablas-de-frecuencias"><span class="header-section-number">4.4.1</span> 4.1. Tablas de frecuencias</a></li>
+  <li><a href="#gráficos-de-barras" id="toc-gráficos-de-barras" class="nav-link" data-scroll-target="#gráficos-de-barras"><span class="header-section-number">4.4.2</span> 4.2. Gráficos de barras</a></li>
+  </ul></li>
+  <li><a href="#análisis-bivariado" id="toc-análisis-bivariado" class="nav-link" data-scroll-target="#análisis-bivariado"><span class="header-section-number">4.5</span> 5. Análisis bivariado</a>
+  <ul class="collapse">
+  <li><a href="#relaciones-numérica-vs.-numérica" id="toc-relaciones-numérica-vs.-numérica" class="nav-link" data-scroll-target="#relaciones-numérica-vs.-numérica"><span class="header-section-number">4.5.1</span> 5.1. Relaciones numérica vs.&nbsp;numérica</a></li>
+  <li><a href="#relaciones-numérica-vs.-categórica" id="toc-relaciones-numérica-vs.-categórica" class="nav-link" data-scroll-target="#relaciones-numérica-vs.-categórica"><span class="header-section-number">4.5.2</span> 5.2. Relaciones numérica vs.&nbsp;categórica</a></li>
+  <li><a href="#distribución-de-risk_level-según-tabaquismo-y-consumo-de-alcohol" id="toc-distribución-de-risk_level-según-tabaquismo-y-consumo-de-alcohol" class="nav-link" data-scroll-target="#distribución-de-risk_level-según-tabaquismo-y-consumo-de-alcohol"><span class="header-section-number">4.5.3</span> 5.3. Distribución de <code>Risk_Level</code> según tabaquismo y consumo de alcohol</a></li>
+  </ul></li>
+  <li><a href="#correlación-entre-variables-numéricas" id="toc-correlación-entre-variables-numéricas" class="nav-link" data-scroll-target="#correlación-entre-variables-numéricas"><span class="header-section-number">4.6</span> 6. Correlación entre variables numéricas</a></li>
+  <li><a href="#resumen-del-análisis-exploratorio" id="toc-resumen-del-análisis-exploratorio" class="nav-link" data-scroll-target="#resumen-del-análisis-exploratorio"><span class="header-section-number">4.7</span> 7. Resumen del análisis exploratorio</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io/blob/main/eda.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./comprension-datos.html">Datos</a></li><li class="breadcrumb-item"><a href="./eda.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Análisis exploratorio de los datos (EDA)</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Análisis exploratorio de los datos (EDA)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción-al-eda" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="introducción-al-eda"><span class="header-section-number">4.1</span> 1. Introducción al EDA</h2>
+<p>En este capítulo se realiza el <strong>Análisis Exploratorio de Datos (EDA)</strong> del conjunto de datos de factores de riesgo de cáncer.</p>
+<p>Los objetivos principales son:</p>
+<ul>
+<li>Entender cómo se distribuyen las variables más relevantes (análisis univariado).<br>
+</li>
+<li>Explorar relaciones entre factores de riesgo y medidas de salida (<code>Overall_Risk_Score</code>, <code>Risk_Level</code>) (análisis bi/multivariado).<br>
+</li>
+<li>Detectar posibles problemas de calidad y características del dataset que puedan afectar a los modelos posteriores (desbalance de clases, valores extremos, etc.).</li>
+</ul>
+<p>El análisis combina tablas, gráficos y comentarios en lenguaje natural, siguiendo la filosofía de <em>“¿qué nos dicen los datos?”</em> trabajada en la asignatura.</p>
+<hr>
+</section>
+<section id="preparación-carga-de-datos-y-librerías" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="preparación-carga-de-datos-y-librerías"><span class="header-section-number">4.2</span> 2. Preparación: carga de datos y librerías</h2>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Lectura del dataset</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/cancer-risk-factors.csv"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Identificamos tipos de variables</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>tipos <span class="ot">&lt;-</span> <span class="fu">sapply</span>(cancer, <span class="cf">function</span>(x) <span class="fu">class</span>(x)[<span class="dv">1</span>])</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>tipos_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">names</span>(tipos),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">tipo_r =</span> <span class="fu">unname</span>(tipos)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>variables_numericas <span class="ot">&lt;-</span> tipos_df <span class="sc">%&gt;%</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_r <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"numeric"</span>, <span class="st">"integer"</span>, <span class="st">"double"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(variable)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>variables_categoricas <span class="ot">&lt;-</span> tipos_df <span class="sc">%&gt;%</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>tipo_r <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"numeric"</span>, <span class="st">"integer"</span>, <span class="st">"double"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(variable)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>variables_numericas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Age"                     "Gender"                 
+ [3] "Smoking"                 "Alcohol_Use"            
+ [5] "Obesity"                 "Family_History"         
+ [7] "Diet_Red_Meat"           "Diet_Salted_Processed"  
+ [9] "Fruit_Veg_Intake"        "Physical_Activity"      
+[11] "Air_Pollution"           "Occupational_Hazards"   
+[13] "BRCA_Mutation"           "H_Pylori_Infection"     
+[15] "Calcium_Intake"          "Overall_Risk_Score"     
+[17] "BMI"                     "Physical_Activity_Level"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>variables_categoricas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Patient_ID"  "Cancer_Type" "Risk_Level" </code></pre>
+</div>
+</div>
+<p>En el capítulo de <strong>comprensión de los datos</strong> ya se vio que el dataset contiene 2.000 registros y alrededor de 20 variables. Aquí se parte de esos mismos datos para profundizar en sus patrones.</p>
+<hr>
+</section>
+<section id="análisis-univariado-de-variables-numéricas" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="análisis-univariado-de-variables-numéricas"><span class="header-section-number">4.3</span> 3. Análisis univariado de variables numéricas</h2>
+<section id="resumen-estadístico-general" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="resumen-estadístico-general"><span class="header-section-number">4.3.1</span> 3.1. Resumen estadístico general</h3>
+<div class="cell" data-tbl-cap="Resumen estadístico de las variables numéricas.">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(variables_numericas)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age            Gender         Smoking        Alcohol_Use    
+ Min.   :25.00   Min.   :0.000   Min.   : 0.000   Min.   : 0.000  
+ 1st Qu.:56.00   1st Qu.:0.000   1st Qu.: 2.000   1st Qu.: 2.000  
+ Median :64.00   Median :0.000   Median : 5.000   Median : 5.000  
+ Mean   :63.25   Mean   :0.489   Mean   : 5.157   Mean   : 5.035  
+ 3rd Qu.:70.00   3rd Qu.:1.000   3rd Qu.: 8.000   3rd Qu.: 8.000  
+ Max.   :90.00   Max.   :1.000   Max.   :10.000   Max.   :10.000  
+    Obesity       Family_History   Diet_Red_Meat   Diet_Salted_Processed
+ Min.   : 0.000   Min.   :0.0000   Min.   : 0.00   Min.   : 0.000       
+ 1st Qu.: 4.000   1st Qu.:0.0000   1st Qu.: 3.00   1st Qu.: 2.000       
+ Median : 6.000   Median :0.0000   Median : 5.00   Median : 4.000       
+ Mean   : 5.968   Mean   :0.1945   Mean   : 5.19   Mean   : 4.564       
+ 3rd Qu.: 9.000   3rd Qu.:0.0000   3rd Qu.: 8.00   3rd Qu.: 7.000       
+ Max.   :10.000   Max.   :1.0000   Max.   :10.00   Max.   :10.000       
+ Fruit_Veg_Intake Physical_Activity Air_Pollution    Occupational_Hazards
+ Min.   : 0.000   Min.   : 0.000    Min.   : 0.000   Min.   : 0.000      
+ 1st Qu.: 3.000   1st Qu.: 1.000    1st Qu.: 3.000   1st Qu.: 2.000      
+ Median : 5.000   Median : 4.000    Median : 5.000   Median : 5.000      
+ Mean   : 4.928   Mean   : 4.015    Mean   : 5.323   Mean   : 4.979      
+ 3rd Qu.: 8.000   3rd Qu.: 6.000    3rd Qu.: 8.000   3rd Qu.: 8.000      
+ Max.   :10.000   Max.   :10.000    Max.   :10.000   Max.   :10.000      
+ BRCA_Mutation    H_Pylori_Infection Calcium_Intake  Overall_Risk_Score
+ Min.   :0.0000   Min.   :0.0000     Min.   : 0.00   Min.   :0.02928   
+ 1st Qu.:0.0000   1st Qu.:0.0000     1st Qu.: 1.00   1st Qu.:0.36698   
+ Median :0.0000   Median :0.0000     Median : 4.00   Median :0.45540   
+ Mean   :0.0325   Mean   :0.1965     Mean   : 3.94   Mean   :0.45445   
+ 3rd Qu.:0.0000   3rd Qu.:0.0000     3rd Qu.: 6.00   3rd Qu.:0.53978   
+ Max.   :1.0000   Max.   :1.0000     Max.   :10.00   Max.   :0.85216   
+      BMI        Physical_Activity_Level
+ Min.   :15.00   Min.   : 0.000         
+ 1st Qu.:23.50   1st Qu.: 2.000         
+ Median :26.20   Median : 5.000         
+ Mean   :26.18   Mean   : 4.939         
+ 3rd Qu.:28.70   3rd Qu.: 8.000         
+ Max.   :41.40   Max.   :10.000         </code></pre>
+</div>
+</div>
+<p>Este resumen confirma rangos razonables para las variables numéricas y permite detectar rápidamente valores mínimos/máximos y posibles outliers.</p>
+</section>
+<section id="histogramas-de-variables-seleccionadas" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="histogramas-de-variables-seleccionadas"><span class="header-section-number">4.3.2</span> 3.2. Histogramas de variables seleccionadas</h3>
+<p>Se analizan tres variables numéricas clave: <code>Age</code>, <code>BMI</code> y <code>Overall_Risk_Score</code>.</p>
+<section id="edad-age" class="level4" data-number="4.3.2.1">
+<h4 data-number="4.3.2.1" class="anchored" data-anchor-id="edad-age"><span class="header-section-number">4.3.2.1</span> 3.2.1. Edad (<code>Age</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> Age)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Edad"</span>, <span class="at">y =</span> <span class="st">"Frecuencia"</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/hist-age-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución de la edad de los pacientes.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> La distribución de la edad se concentra principalmente entre los <strong>45 y 80 años</strong>, con un pico alrededor de los <strong>60–65 años</strong>. Hay muy pocos pacientes por debajo de los 40 años. Esto indica que el dataset representa sobre todo a <strong>población adulta de mediana y avanzada edad</strong>, algo coherente con el hecho de que el riesgo de cáncer suele aumentar con la edad.</p>
+<hr>
+</section>
+<section id="índice-de-masa-corporal-bmi" class="level4" data-number="4.3.2.2">
+<h4 data-number="4.3.2.2" class="anchored" data-anchor-id="índice-de-masa-corporal-bmi"><span class="header-section-number">4.3.2.2</span> 3.2.2. Índice de masa corporal (<code>BMI</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> BMI)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI"</span>, <span class="at">y =</span> <span class="st">"Frecuencia"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/hist-bmi-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución del índice de masa corporal (BMI).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> El BMI presenta una distribución aproximadamente en forma de campana, centrada en valores de <strong>25–30</strong>. La mayoría de los pacientes se sitúa, por tanto, en rangos de <strong>sobrepeso u obesidad ligera</strong>, con pocos casos de BMI muy bajo o muy alto. Este patrón es coherente con un escenario en el que el exceso de peso es un factor de riesgo frecuente en la población.</p>
+<hr>
+</section>
+<section id="score-de-riesgo-global-overall_risk_score" class="level4" data-number="4.3.2.3">
+<h4 data-number="4.3.2.3" class="anchored" data-anchor-id="score-de-riesgo-global-overall_risk_score"><span class="header-section-number">4.3.2.3</span> 3.2.3. Score de riesgo global (<code>Overall_Risk_Score</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> Overall_Risk_Score)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Overall_Risk_Score"</span>, <span class="at">y =</span> <span class="st">"Frecuencia"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/hist-risk-score-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución del score de riesgo global (Overall_Risk_Score).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> La variable <code>Overall_Risk_Score</code> tiene una distribución aproximadamente <strong>normal</strong>, centrada cerca de <strong>0,5</strong> y con la mayoría de valores entre ~0,3 y 0,7. Esto sugiere que el dataset está construido de forma que la mayoría de pacientes tienen un <strong>riesgo intermedio</strong>, con pocos casos en los extremos de riesgo muy bajo o muy alto.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="análisis-univariado-de-variables-categóricas" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="análisis-univariado-de-variables-categóricas"><span class="header-section-number">4.4</span> 4. Análisis univariado de variables categóricas</h2>
+<p>En esta sección se exploran las distribuciones de algunas variables categóricas relevantes:</p>
+<ul>
+<li><code>Risk_Level</code></li>
+<li><code>Smoking</code></li>
+<li><code>Alcohol_Use</code></li>
+<li><code>Physical_Activity</code></li>
+<li><code>Family_History</code></li>
+</ul>
+<section id="tablas-de-frecuencias" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="tablas-de-frecuencias"><span class="header-section-number">4.4.1</span> 4.1. Tablas de frecuencias</h3>
+<div class="cell" data-tbl-cap="Tablas de frecuencias para algunas variables categóricas.">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>frecuencias <span class="ot">&lt;-</span> cancer <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Risk_Level, Smoking, Alcohol_Use, Physical_Activity, Family_History) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(table)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>frecuencias</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Risk_Level
+
+  High    Low Medium 
+   102    324   1574 
+
+$Smoking
+
+  0   1   2   3   4   5   6   7   8   9  10 
+169 204 174 175 166 166 267 103 107 126 343 
+
+$Alcohol_Use
+
+  0   1   2   3   4   5   6   7   8   9  10 
+204 186 210 151 145 126 183 220 195 197 183 
+
+$Physical_Activity
+
+  0   1   2   3   4   5   6   7   8   9  10 
+242 261 225 254 246 173 152 111 117 107 112 
+
+$Family_History
+
+   0    1 
+1611  389 </code></pre>
+</div>
+</div>
+<p>A partir de estas tablas se observan, por ejemplo:</p>
+<ul>
+<li><p><code>Risk_Level</code> está claramente <strong>desbalanceada</strong>:</p>
+<ul>
+<li>La categoría <strong>Medium</strong> concentra la gran mayoría de los casos.</li>
+<li><strong>Low</strong> tiene una proporción menor.</li>
+<li><strong>High</strong> representa solo una pequeña fracción (unos 100 casos de 2.000, es decir, en torno al 5%).</li>
+</ul></li>
+<li><p><code>Family_History</code> tiene muchos más pacientes sin antecedentes (<code>0</code>) que con antecedentes (<code>1</code>).</p></li>
+<li><p><code>Smoking</code>, <code>Alcohol_Use</code> y <code>Physical_Activity</code> se codifican en niveles <strong>0–10</strong>, cubriendo un amplio rango de intensidad/ frecuencia.</p></li>
+</ul>
+<hr>
+</section>
+<section id="gráficos-de-barras" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="gráficos-de-barras"><span class="header-section-number">4.4.2</span> 4.2. Gráficos de barras</h3>
+<section id="nivel-de-riesgo-risk_level" class="level4" data-number="4.4.2.1">
+<h4 data-number="4.4.2.1" class="anchored" data-anchor-id="nivel-de-riesgo-risk_level"><span class="header-section-number">4.4.2.1</span> 4.2.1. Nivel de riesgo (<code>Risk_Level</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Risk_Level =</span> <span class="fu">as.factor</span>(Risk_Level)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Risk_Level)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Risk_Level"</span>, <span class="at">y =</span> <span class="st">"Número de pacientes"</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/bar-risk-level-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución del nivel de riesgo (Risk_Level).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> La categoría <strong>Medium</strong> domina claramente el gráfico, seguida por <strong>Low</strong> y, en mucha menor medida, <strong>High</strong>. Esto confirma que el nivel de riesgo categórico está <strong>muy desbalanceado</strong>, algo que será importante tener en cuenta cuando se construyan modelos de clasificación, ya que la clase minoritaria (alto riesgo) podría ser más difícil de aprender.</p>
+<hr>
+</section>
+<section id="tabaquismo-smoking" class="level4" data-number="4.4.2.2">
+<h4 data-number="4.4.2.2" class="anchored" data-anchor-id="tabaquismo-smoking"><span class="header-section-number">4.4.2.2</span> 4.2.2. Tabaquismo (<code>Smoking</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Smoking =</span> <span class="fu">factor</span>(Smoking, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(Smoking)))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Smoking)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Smoking"</span>, <span class="at">y =</span> <span class="st">"Número de pacientes"</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/bar-smoking-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución de los niveles de tabaquismo (Smoking).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> La variable <code>Smoking</code> (0–10) presenta pacientes repartidos a lo largo de toda la escala, con una presencia apreciable tanto en niveles bajos como en niveles medios y altos. Esto indica que el dataset contiene <strong>patrones de consumo muy variados</strong>, desde no fumadores hasta fumadores intensivos, lo que resulta interesante para estudiar cómo cambia el riesgo con el tabaquismo.</p>
+<hr>
+</section>
+<section id="consumo-de-alcohol-alcohol_use" class="level4" data-number="4.4.2.3">
+<h4 data-number="4.4.2.3" class="anchored" data-anchor-id="consumo-de-alcohol-alcohol_use"><span class="header-section-number">4.4.2.3</span> 4.2.3. Consumo de alcohol (<code>Alcohol_Use</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Alcohol_Use =</span> <span class="fu">factor</span>(Alcohol_Use, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(Alcohol_Use)))) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Alcohol_Use)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Alcohol_Use"</span>, <span class="at">y =</span> <span class="st">"Número de pacientes"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/bar-alcohol-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución de los niveles de consumo de alcohol (Alcohol_Use).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> El consumo de alcohol también se distribuye a lo largo de los distintos niveles 0–10, sin una única categoría claramente dominante. Esto sugiere que en el dataset coexisten <strong>distintos patrones de consumo</strong>, lo que permitirá analizar cómo se asocia cada rango con el score de riesgo y con el nivel de riesgo categórico.</p>
+<hr>
+</section>
+<section id="actividad-física-physical_activity" class="level4" data-number="4.4.2.4">
+<h4 data-number="4.4.2.4" class="anchored" data-anchor-id="actividad-física-physical_activity"><span class="header-section-number">4.4.2.4</span> 4.2.4. Actividad física (<code>Physical_Activity</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Physical_Activity =</span> <span class="fu">factor</span>(Physical_Activity, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(Physical_Activity)))) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Physical_Activity)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Physical_Activity"</span>, <span class="at">y =</span> <span class="st">"Número de pacientes"</span>) <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/bar-physical-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución de los niveles de actividad física (Physical_Activity).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> Los niveles más frecuentes de <code>Physical_Activity</code> corresponden a valores <strong>bajos o intermedios</strong>, mientras que los niveles más altos son menos frecuentes. Desde el punto de vista de prevención, esto refleja un predominio de estilos de vida <strong>poco activos</strong>, lo que puede contribuir a un mayor riesgo global.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="análisis-bivariado" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="análisis-bivariado"><span class="header-section-number">4.5</span> 5. Análisis bivariado</h2>
+<p>En esta sección se exploran relaciones entre variables numéricas y entre variables numéricas y categóricas.</p>
+<section id="relaciones-numérica-vs.-numérica" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="relaciones-numérica-vs.-numérica"><span class="header-section-number">4.5.1</span> 5.1. Relaciones numérica vs.&nbsp;numérica</h3>
+<section id="age-vs-overall_risk_score" class="level4" data-number="4.5.1.1">
+<h4 data-number="4.5.1.1" class="anchored" data-anchor-id="age-vs-overall_risk_score"><span class="header-section-number">4.5.1.1</span> 5.1.1. <code>Age</code> vs <code>Overall_Risk_Score</code></h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Overall_Risk_Score)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Edad"</span>, <span class="at">y =</span> <span class="st">"Overall_Risk_Score"</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/scatter-age-risk-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Relación entre edad (Age) y score de riesgo (Overall_Risk_Score).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> La nube de puntos está bastante dispersa y la curva de suavizado (<code>loess</code>) apenas muestra una tendencia marcada. Se aprecia, como mucho, una ligera variación del riesgo en edades medias, pero en general <strong>la edad por sí sola no explica gran parte de la variabilidad del score de riesgo</strong> en este dataset sintético.</p>
+<hr>
+</section>
+<section id="bmi-vs-overall_risk_score" class="level4" data-number="4.5.1.2">
+<h4 data-number="4.5.1.2" class="anchored" data-anchor-id="bmi-vs-overall_risk_score"><span class="header-section-number">4.5.1.2</span> 5.1.2. <code>BMI</code> vs <code>Overall_Risk_Score</code></h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> BMI, <span class="at">y =</span> Overall_Risk_Score)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI"</span>, <span class="at">y =</span> <span class="st">"Overall_Risk_Score"</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/scatter-bmi-risk-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Relación entre BMI y score de riesgo (Overall_Risk_Score).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> En este caso también hay dispersión, pero la curva de suavizado muestra una <strong>tendencia ligeramente creciente</strong>: a medida que aumenta el BMI, el <code>Overall_Risk_Score</code> tiende a ser algo mayor. Aunque la relación no es muy fuerte, sí apunta en la dirección esperada desde el punto de vista epidemiológico: <strong>un mayor índice de masa corporal se asocia con un incremento del riesgo global</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="relaciones-numérica-vs.-categórica" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="relaciones-numérica-vs.-categórica"><span class="header-section-number">4.5.2</span> 5.2. Relaciones numérica vs.&nbsp;categórica</h3>
+<section id="overall_risk_score-por-nivel-de-riesgo-risk_level" class="level4" data-number="4.5.2.1">
+<h4 data-number="4.5.2.1" class="anchored" data-anchor-id="overall_risk_score-por-nivel-de-riesgo-risk_level"><span class="header-section-number">4.5.2.1</span> 5.2.1. <code>Overall_Risk_Score</code> por nivel de riesgo (<code>Risk_Level</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Risk_Level =</span> <span class="fu">as.factor</span>(Risk_Level)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Risk_Level, <span class="at">y =</span> Overall_Risk_Score)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Risk_Level"</span>, <span class="at">y =</span> <span class="st">"Overall_Risk_Score"</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/box-risk-score-by-risk-level-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución de Overall_Risk_Score según Risk_Level.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> Los boxplots muestran tres grupos claramente separados:</p>
+<ul>
+<li>Para <strong>Low</strong>, los scores se concentran en torno a valores bajos (~0,25–0,30).</li>
+<li>Para <strong>Medium</strong>, la mediana está en torno a ~0,45–0,50.</li>
+<li>Para <strong>High</strong>, los valores se desplazan hacia la parte alta (~0,70 en adelante).</li>
+</ul>
+<p>Hay algo de solapamiento entre cajas, pero en general el <code>Overall_Risk_Score</code> <strong>aumenta de forma consistente al pasar de Low a Medium y de Medium a High</strong>, lo que valida la coherencia interna del dataset: la variable continua de riesgo y la categórica de nivel de riesgo están alineadas.</p>
+<hr>
+</section>
+<section id="overall_risk_score-por-tabaquismo-smoking" class="level4" data-number="4.5.2.2">
+<h4 data-number="4.5.2.2" class="anchored" data-anchor-id="overall_risk_score-por-tabaquismo-smoking"><span class="header-section-number">4.5.2.2</span> 5.2.2. <code>Overall_Risk_Score</code> por tabaquismo (<code>Smoking</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Smoking =</span> <span class="fu">factor</span>(Smoking, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(Smoking)))) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Smoking, <span class="at">y =</span> Overall_Risk_Score)) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Smoking"</span>, <span class="at">y =</span> <span class="st">"Overall_Risk_Score"</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/box-risk-score-by-smoking-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución de Overall_Risk_Score según niveles de tabaquismo (Smoking).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> Al recorrer los niveles de <code>Smoking</code> de 0 a 10 se observa que:</p>
+<ul>
+<li>Los niveles bajos tienden a tener <strong>medianas de riesgo algo menores</strong>.</li>
+<li>A medida que aumenta el nivel de tabaquismo, las cajas se desplazan ligeramente hacia valores más altos de <code>Overall_Risk_Score</code>, aunque con bastante dispersión dentro de cada grupo.</li>
+</ul>
+<p>En conjunto, los boxplots sugieren una <strong>asociación positiva moderada</strong> entre tabaquismo y riesgo global: <strong>más tabaquismo → ligeramente más riesgo</strong>, sin llegar a ser una relación determinista.</p>
+<hr>
+</section>
+<section id="overall_risk_score-por-consumo-de-alcohol-alcohol_use" class="level4" data-number="4.5.2.3">
+<h4 data-number="4.5.2.3" class="anchored" data-anchor-id="overall_risk_score-por-consumo-de-alcohol-alcohol_use"><span class="header-section-number">4.5.2.3</span> 5.2.3. <code>Overall_Risk_Score</code> por consumo de alcohol (<code>Alcohol_Use</code>)</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Alcohol_Use =</span> <span class="fu">factor</span>(Alcohol_Use, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(Alcohol_Use)))) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Alcohol_Use, <span class="at">y =</span> Overall_Risk_Score)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Alcohol_Use"</span>, <span class="at">y =</span> <span class="st">"Overall_Risk_Score"</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/box-risk-score-by-alcohol-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribución de Overall_Risk_Score según niveles de consumo de alcohol (Alcohol_Use).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> Los patrones para <code>Alcohol_Use</code> son similares a los de <code>Smoking</code>: a mayor nivel de consumo de alcohol, la distribución de <code>Overall_Risk_Score</code> tiende a situarse en valores algo más altos, aunque con variabilidad interna en cada nivel. Esto sugiere que el dataset refleja la idea de que <strong>un mayor consumo de alcohol se asocia con un riesgo global algo mayor</strong>, pero con la incertidumbre propia de un fenómeno multifactorial.</p>
+<hr>
+</section>
+</section>
+<section id="distribución-de-risk_level-según-tabaquismo-y-consumo-de-alcohol" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="distribución-de-risk_level-según-tabaquismo-y-consumo-de-alcohol"><span class="header-section-number">4.5.3</span> 5.3. Distribución de <code>Risk_Level</code> según tabaquismo y consumo de alcohol</h3>
+<p>Para explorar cómo se reparte el nivel de riesgo según <code>Smoking</code> y <code>Alcohol_Use</code>, se utilizan gráficos de barras apiladas en proporciones.</p>
+<section id="risk_level-por-smoking" class="level4" data-number="4.5.3.1">
+<h4 data-number="4.5.3.1" class="anchored" data-anchor-id="risk_level-por-smoking"><span class="header-section-number">4.5.3.1</span> 5.3.1. <code>Risk_Level</code> por <code>Smoking</code></h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Smoking =</span> <span class="fu">factor</span>(Smoking, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(Smoking))),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Risk_Level =</span> <span class="fu">as.factor</span>(Risk_Level)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Smoking, <span class="at">fill =</span> Risk_Level)) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Smoking"</span>, <span class="at">y =</span> <span class="st">"Proporción"</span>, <span class="at">fill =</span> <span class="st">"Risk_Level"</span>) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/prop-risk-by-smoking-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Proporción de niveles de riesgo (Risk_Level) según niveles de tabaquismo (Smoking).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> En este gráfico se aprecia que:</p>
+<ul>
+<li>En los niveles bajos de <code>Smoking</code> predomina ampliamente el riesgo <strong>Medium</strong>, con una proporción moderada de <strong>Low</strong> y muy pocos casos de <strong>High</strong>.</li>
+<li>A medida que aumenta el nivel de tabaquismo, la <strong>banda correspondiente a <code>High</code> (color rojo)</strong> se hace ligeramente más ancha, mientras que la de <code>Low</code> (verde) tiende a estrecharse.</li>
+</ul>
+<p>Esto indica que, en este dataset, <strong>los niveles más altos de tabaquismo están asociados con una mayor proporción de pacientes de alto riesgo</strong>, aunque la categoría Medium sigue siendo mayoritaria en todos los niveles.</p>
+<hr>
+</section>
+<section id="risk_level-por-alcohol_use" class="level4" data-number="4.5.3.2">
+<h4 data-number="4.5.3.2" class="anchored" data-anchor-id="risk_level-por-alcohol_use"><span class="header-section-number">4.5.3.2</span> 5.3.2. <code>Risk_Level</code> por <code>Alcohol_Use</code></h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Alcohol_Use =</span> <span class="fu">factor</span>(Alcohol_Use, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(Alcohol_Use))),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Risk_Level =</span> <span class="fu">as.factor</span>(Risk_Level)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Alcohol_Use, <span class="at">fill =</span> Risk_Level)) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Alcohol_Use"</span>, <span class="at">y =</span> <span class="st">"Proporción"</span>, <span class="at">fill =</span> <span class="st">"Risk_Level"</span>) <span class="sc">+</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/prop-risk-by-alcohol-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Proporción de niveles de riesgo (Risk_Level) según niveles de consumo de alcohol (Alcohol_Use).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> El patrón es similar al observado para <code>Smoking</code>:</p>
+<ul>
+<li>En niveles bajos de consumo de alcohol, la mayor parte de los pacientes se clasifica como riesgo <strong>Medium</strong> y una fracción no despreciable como <strong>Low</strong>.</li>
+<li>En niveles altos de <code>Alcohol_Use</code>, la proporción de casos <strong>High</strong> aumenta, mientras que la de <strong>Low</strong> disminuye.</li>
+</ul>
+<p>De nuevo, esto refuerza la idea de que el dataset refleja una <strong>relación cualitativa razonable</strong> entre estilos de vida menos saludables (más tabaquismo, más alcohol) y un mayor nivel de riesgo.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="correlación-entre-variables-numéricas" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="correlación-entre-variables-numéricas"><span class="header-section-number">4.6</span> 6. Correlación entre variables numéricas</h2>
+<p>Como resumen de las relaciones entre variables numéricas, se visualiza una <strong>matriz de correlación</strong> para algunas variables seleccionadas.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar/Ocultar código</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>vars_num_seleccionadas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Age"</span>, <span class="st">"Air_Pollution"</span>, <span class="st">"BMI"</span>, <span class="st">"Overall_Risk_Score"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>datos_num <span class="ot">&lt;-</span> cancer <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(vars_num_seleccionadas)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>matriz_cor <span class="ot">&lt;-</span> <span class="fu">cor</span>(datos_num)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>matriz_cor_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(matriz_cor) <span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">var1 =</span> <span class="fu">rownames</span>(matriz_cor)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>var1,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"var2"</span>,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"correlacion"</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(matriz_cor_df, <span class="fu">aes</span>(<span class="at">x =</span> var1, <span class="at">y =</span> var2, <span class="at">fill =</span> correlacion)) <span class="sc">+</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="dv">0</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">fill =</span> <span class="st">"Correlación"</span>) <span class="sc">+</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eda_files/figure-html/corr-matrix-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Matriz de correlación entre variables numéricas seleccionadas.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comentario:</strong> La matriz muestra, de forma cualitativa, que:</p>
+<ul>
+<li><code>Overall_Risk_Score</code> guarda <strong>correlaciones positivas moderadas</strong> con algunas variables como <code>BMI</code> y <code>Air_Pollution</code>.</li>
+<li>La correlación con <code>Age</code> parece más débil.</li>
+<li>No se observan correlaciones extremadamente altas (cercanas a 1 en valor absoluto) entre las variables seleccionadas.</li>
+</ul>
+<p>Esto sugiere que, al construir modelos, es poco probable que haya problemas graves de <strong>colinealidad</strong> entre estas variables numéricas, aunque será conveniente revisarlo con más detalle en la fase de modelado.</p>
+<hr>
+</section>
+<section id="resumen-del-análisis-exploratorio" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="resumen-del-análisis-exploratorio"><span class="header-section-number">4.7</span> 7. Resumen del análisis exploratorio</h2>
+<p>A partir del EDA realizado se pueden extraer las siguientes ideas principales:</p>
+<ol type="1">
+<li><p><strong>Perfil de la población del dataset</strong></p>
+<ul>
+<li>Predominan pacientes adultos de <strong>mediana y avanzada edad</strong> (45–80 años).</li>
+<li>La mayoría presenta valores de <strong>BMI en rango de sobrepeso u obesidad moderada</strong>.</li>
+</ul></li>
+<li><p><strong>Distribución del riesgo</strong></p>
+<ul>
+<li>El <code>Overall_Risk_Score</code> se distribuye de forma aproximadamente normal alrededor de 0,5, indicando un predominio de <strong>niveles de riesgo intermedio</strong>.</li>
+<li>La variable categórica <code>Risk_Level</code> está <strong>desbalanceada</strong>, con muchos casos en <strong>Medium</strong>, menos en <strong>Low</strong> y pocos en <strong>High</strong>.</li>
+</ul></li>
+<li><p><strong>Hábitos y estilo de vida</strong></p>
+<ul>
+<li>Las variables <code>Smoking</code>, <code>Alcohol_Use</code> y <code>Physical_Activity</code> cubren un abanico amplio de niveles (0–10), con un número apreciable de pacientes en niveles medios y altos de tabaquismo y consumo de alcohol, y niveles bajos/intermedios de actividad física.</li>
+</ul></li>
+<li><p><strong>Relaciones entre factores y riesgo</strong></p>
+<ul>
+<li><code>Age</code> muestra poca relación directa con <code>Overall_Risk_Score</code> en este dataset sintético.</li>
+<li><code>BMI</code>, <code>Smoking</code> y <code>Alcohol_Use</code> presentan <strong>relaciones positivas moderadas</strong> con el score de riesgo y con la proporción de casos de alto riesgo.</li>
+<li>Los boxplots de <code>Overall_Risk_Score</code> por <code>Risk_Level</code> indican una <strong>coherencia interna clara</strong>: el score aumenta al pasar de Low a Medium y de Medium a High.</li>
+</ul></li>
+<li><p><strong>Correlaciones numéricas</strong></p>
+<ul>
+<li>No se observan correlaciones excesivamente altas entre las variables numéricas analizadas, lo que es una buena señal para el posterior uso conjunto en modelos.</li>
+</ul></li>
+</ol>
+<p>En conjunto, el EDA muestra que el dataset de <strong>Cancer Risk Factors</strong> está construido de forma <strong>coherente y razonable</strong> desde el punto de vista estadístico y epidemiológico: los factores de estilo de vida menos saludables se asocian con niveles de riesgo más altos, y las variables continua y categórica de riesgo (<code>Overall_Risk_Score</code> y <code>Risk_Level</code>) están alineadas.</p>
+<p>Estos resultados proporcionan una base sólida para avanzar hacia las <strong>fases de modelado, evaluación y segmentación de perfiles de riesgo</strong> que se abordarán en la siguiente parte del proyecto.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="./comprension-datos.html" class="pagination-link" aria-label="Comprensión de los datos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Comprensión de los datos</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2025, Jean Cuervo</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io/blob/main/eda.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/anthonycuervo23">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

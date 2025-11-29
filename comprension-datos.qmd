@@ -1,0 +1,234 @@
+---
+title: "Comprensión de los datos"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    df-print: paged
+---
+
+## 1. Lectura y organización de los datos
+
+En esta sección se realiza la **lectura del fichero CSV** con R y se obtienen las primeras características básicas del conjunto de datos:
+
+- Número de registros (filas).  
+- Número de variables (columnas).  
+- Vista rápida de la estructura de la tabla.
+
+```{r}
+#| label: setup-comprension
+#| echo: true
+#| message: false
+#| warning: false
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tibble)
+
+# Lectura del dataset desde la carpeta 'data'
+cancer <- read_csv("data/cancer-risk-factors.csv")
+
+n_filas <- nrow(cancer)
+n_columnas <- ncol(cancer)
+
+cat("Número de registros:", n_filas, "\n")
+cat("Número de variables:", n_columnas, "\n")
+```
+
+A continuación se muestran las primeras filas de la tabla, para tener una idea inicial del contenido:
+
+```{r}
+#| label: head-cancer
+#| echo: true
+#| tbl-cap: "Primeras 6 filas del dataset de factores de riesgo de cáncer."
+
+head(cancer, 6)
+```
+
+Y una vista general de la estructura (tipos de cada columna, ejemplos de valores):
+
+```{r}
+#| label: glimpse-cancer
+#| echo: true
+
+glimpse(cancer)
+```
+
+Esta información permite comprobar que los datos se han cargado correctamente y que las variables tienen tipos razonables (numérico, carácter, etc.) para poder trabajar con ellas en las siguientes fases.
+
+
+## 2. Sobre la fuente de datos y el diccionario de variables
+
+El dataset **“Cancer Risk Factors”** procede de la plataforma Kaggle y ha sido diseñado con fines educativos. Cada fila representa un paciente y cada columna recoge información relacionada con:
+
+* **Demografía** (por ejemplo, `Age`, `Gender`, `Patient_ID`).
+* **Estilo de vida** (por ejemplo, `Smoking`, `Alcohol_Use`, `Obesity`, `Diet_Red_Meat`, `Fruit_Veg_Intake`, `Physical_Activity`).
+* **Factores ambientales y genéticos** (por ejemplo, `Air_Pollution`, `Occupational_Hazards`, `Family_History`, `BRCA_Mutation`, `H_Pylori_Infection`).
+* **Variables agregadas de salida** (`BMI`, `Overall_Risk_Score`, `Risk_Level`).
+
+Para facilitar la comprensión, se construye un pequeño **diccionario de variables** con algunas columnas clave, indicando su rol en el proyecto.
+
+```{r}
+#| label: diccionario-variables
+#| echo: true
+#| tbl-cap: "Diccionario simplificado de variables clave del dataset."
+
+diccionario <- tribble(
+  ~variable,             ~descripcion,                                      ~tipo_datos,      ~rol,
+  "Patient_ID",          "Identificador único del paciente",               "categórica",     "identificador",
+  "Age",                 "Edad del paciente",                              "numérica",       "explicativa",
+  "Gender",              "Género del paciente",                            "categórica",     "explicativa",
+  "BMI",                 "Índice de Masa Corporal",                        "numérica",       "explicativa",
+  "Smoking",             "Nivel de tabaquismo",                            "categórica",     "explicativa",
+  "Alcohol_Use",         "Nivel de consumo de alcohol",                    "categórica",     "explicativa",
+  "Obesity",             "Indicador relacionado con obesidad",            "categórica",     "explicativa",
+  "Physical_Activity",   "Nivel de actividad física",                      "categórica",     "explicativa",
+  "Family_History",      "Antecedentes familiares de cáncer",              "categórica",     "explicativa",
+  "Air_Pollution",       "Nivel de exposición a contaminación ambiental",  "numérica",       "explicativa",
+  "Occupational_Hazards","Exposición a riesgos laborales",                 "categórica",     "explicativa",
+  "Overall_Risk_Score",  "Score numérico de riesgo de cáncer",             "numérica",       "objetivo (regresión)",
+  "Risk_Level",          "Nivel categórico de riesgo (Low/Medium/High)",  "categórica",     "objetivo (clasificación)"
+)
+
+diccionario
+```
+
+En términos de la asignatura, trabajaremos con una mezcla de:
+
+* **Variables numéricas** (continuas o discretas), como `Age`, `BMI`, `Air_Pollution`, `Overall_Risk_Score`.
+* **Variables categóricas** (nominales u ordinales), como `Gender`, `Smoking`, `Alcohol_Use`, `Risk_Level`, etc.
+
+Esta distinción será importante a la hora de elegir los gráficos y las técnicas de análisis en el EDA.
+
+
+## 3. Clasificación de variables por tipo
+
+Para tener una visión más sistemática, se obtiene el **tipo de dato** que R asigna a cada columna:
+
+```{r}
+#| label: tipos-variables
+#| echo: true
+#| tbl-cap: "Tipos de datos (clase R) para cada variable del dataset."
+
+tipos <- sapply(cancer, function(x) class(x)[1])
+
+tipos_df <- tibble(
+  variable = names(tipos),
+  tipo_r = unname(tipos)
+)
+
+tipos_df
+```
+
+A partir de esta tabla, se construyen dos listas: **variables numéricas** y **variables categóricas**, que se utilizarán luego en el análisis exploratorio.
+
+```{r}
+#| label: variables-num-cat
+#| echo: true
+
+variables_numericas <- tipos_df %>%
+  filter(tipo_r %in% c("numeric", "integer", "double")) %>%
+  pull(variable)
+
+variables_categoricas <- tipos_df %>%
+  filter(!tipo_r %in% c("numeric", "integer", "double")) %>%
+  pull(variable)
+
+cat("Variables numéricas:\n")
+print(variables_numericas)
+
+cat("\nVariables categóricas:\n")
+print(variables_categoricas)
+```
+
+
+## 4. Calidad de los datos: valores faltantes y duplicados
+
+Antes de profundizar en el EDA, es importante revisar algunos aspectos básicos de **calidad de los datos**:
+
+* ¿Hay valores faltantes (`NA`) en alguna columna?
+* ¿Existen filas duplicadas?
+
+### 4.1. Valores faltantes por variable
+
+```{r}
+#| label: na-por-variable
+#| echo: true
+#| tbl-cap: "Número de valores faltantes (NA) por variable."
+
+na_resumen <- cancer %>%
+  summarise(across(everything(), ~ sum(is.na(.)))) %>%
+  pivot_longer(cols = everything(),
+               names_to = "variable",
+               values_to = "na_count") %>%
+  arrange(desc(na_count))
+
+na_resumen
+```
+
+Esta tabla indica, para cada variable, **cuántos valores faltantes** hay. Si alguna columna tiene un número significativo de `NA`, se comentará en el EDA y se decidirá cómo tratarla (eliminar filas, imputar valores, etc.).
+
+### 4.2. Búsqueda de registros duplicados
+
+```{r}
+#| label: filas-duplicadas
+#| echo: true
+
+total_registros <- nrow(cancer)
+registros_unicos <- nrow(distinct(cancer))
+
+cat("Total de registros: ", total_registros, "\n")
+cat("Registros únicos:   ", registros_unicos, "\n")
+cat("Registros duplicados:", total_registros - registros_unicos, "\n")
+```
+
+Si el número de registros duplicados es mayor que cero, será necesario analizar si se trata de:
+
+* Errores de carga de datos.
+* Repeticiones legítimas (por ejemplo, pacientes con el mismo patrón de variables).
+
+En función de ese análisis, se decidirá si conviene eliminar o mantener esas filas en el dataset de trabajo.
+
+
+## 5. Resumen descriptivo inicial
+
+Finalmente, se obtiene un **resumen estadístico básico** de las variables numéricas, que servirá como punto de partida para el EDA:
+
+```{r}
+#| label: resumen-numericas
+#| echo: true
+#| tbl-cap: "Resumen estadístico de las variables numéricas del dataset."
+
+cancer %>%
+  select(all_of(variables_numericas)) %>%
+  summary()
+```
+
+Para las variables categóricas más importantes (por ejemplo, `Risk_Level`, `Smoking`, `Alcohol_Use`, `Physical_Activity`), resulta útil ver sus tablas de frecuencias:
+
+```{r}
+#| label: frecuencias-categoricas
+#| echo: true
+
+frecuencias <- cancer %>%
+  select(Risk_Level, Smoking, Alcohol_Use, Physical_Activity) %>%
+  lapply(table)
+
+frecuencias
+```
+
+
+## 6. Conclusión de la fase de comprensión de los datos
+
+En esta sección se ha:
+
+* Leído el fichero CSV con R y comprobado el número de registros y variables.
+* Elaborado un pequeño **diccionario de datos** con algunas variables clave y su rol en el proyecto.
+* Clasificado las variables en **numéricas** y **categóricas**.
+* Revisado la presencia de **valores faltantes** y **posibles duplicados**.
+* Obtenido un primer resumen estadístico de las variables numéricas y las frecuencias de algunas variables categóricas.
+
+Con esta base, el siguiente capítulo se centrará en el **Análisis Exploratorio de Datos (EDA)**, utilizando visualizaciones y análisis univariados y bivariados para responder, de forma más visual y narrativa, a la pregunta:
+
+> **¿Qué nos dicen los datos sobre los factores de riesgo de cáncer en este conjunto de pacientes?**

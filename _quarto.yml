@@ -1,21 +1,39 @@
 project:
-  type: website
+  type: book
+  output-dir: _site
 
-website:
-  title: "anthonycuervo23.github.io"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+book:
+  title: "Factores de riesgo de cáncer"
+  subtitle: "Proyecto de Fundamentos de la Ciencia de los Datos"
+  author: "Jean Cuervo"
+  language: es
+  repo-url: https://github.com/anthonycuervo23/anthonycuervo23.github.io
+  repo-actions: [source]
+  
+  chapters:
+  - index.qmd
+  - introduccion.qmd
+  - part: "Datos"
+    chapters: 
+      - comprension-datos.qmd
+      - eda.qmd
+    # para la segunda entrega del proyecto.
+    #- modelos.qmd
+    #- conclusiones.qmd
+  page-footer: 
+    left: "© Copyright 2025, Jean Cuervo" 
+    right: 
+      - icon: github
+        href: https://github.com/anthonycuervo23
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
-    css: styles.css
+    theme: flatly
     toc: true
+    number-sections: true
+    code-fold: show
+    code-summary: "Mostrar/Ocultar código"
+    page-layout: full
+    smooth-scroll: true
 
 editor: visual
-
