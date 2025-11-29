@@ -9,6 +9,8 @@ book:
   language: es
   repo-url: https://github.com/anthonycuervo23/anthonycuervo23.github.io
   repo-actions: [source]
+  output-file: factores-riesgo-cancer
+  downloads: [pdf]   
   
   chapters:
   - index.qmd
