@@ -20,7 +20,11 @@ En esta sección se realiza la **lectura del fichero CSV** con R y se obtienen l
 #| echo: true
 #| message: false
 #| warning: false
-
+install.packages("readr")
+install.packages("readr")
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("tibble")
 library(readr)
 library(dplyr)
 library(tidyr)
