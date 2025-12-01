@@ -138,6 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="./">Factores de riesgo de cáncer</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/anthonycuervo23/anthonycuervo23.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./factores-riesgo-cancer.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -363,7 +364,7 @@ $ Risk_Level              &lt;chr&gt; "Medium", "Medium", "Medium", "Low", "Medi
 <section id="clasificación-de-variables-por-tipo" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="clasificación-de-variables-por-tipo"><span class="header-section-number">3.3</span> 3. Clasificación de variables por tipo</h2>
 <p>Para tener una visión más sistemática, se obtiene el <strong>tipo de dato</strong> que R asigna a cada columna:</p>
-<div class="cell" data-tbl-cap="Tipos de datos (clase R) para cada variable del dataset.">
+<div class="cell" data-tbl-cap="Tipos de datos para cada variable del dataset.">
 <details open="" class="code-fold">
 <summary>Mostrar/Ocultar código</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tipos <span class="ot">&lt;-</span> <span class="fu">sapply</span>(cancer, <span class="cf">function</span>(x) <span class="fu">class</span>(x)[<span class="dv">1</span>])</span>
@@ -376,7 +377,7 @@ $ Risk_Level              &lt;chr&gt; "Medium", "Medium", "Medium", "Low", "Medi
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>tipos_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div data-pagedtable="false"> <div class="table-caption"><p>Tipos de datos (clase R) para cada variable del dataset.</p></div>
+<div data-pagedtable="false"> <div class="table-caption"><p>Tipos de datos para cada variable del dataset.</p></div>
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["tipo_r"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Patient_ID","2":"character"},{"1":"Cancer_Type","2":"character"},{"1":"Age","2":"numeric"},{"1":"Gender","2":"numeric"},{"1":"Smoking","2":"numeric"},{"1":"Alcohol_Use","2":"numeric"},{"1":"Obesity","2":"numeric"},{"1":"Family_History","2":"numeric"},{"1":"Diet_Red_Meat","2":"numeric"},{"1":"Diet_Salted_Processed","2":"numeric"},{"1":"Fruit_Veg_Intake","2":"numeric"},{"1":"Physical_Activity","2":"numeric"},{"1":"Air_Pollution","2":"numeric"},{"1":"Occupational_Hazards","2":"numeric"},{"1":"BRCA_Mutation","2":"numeric"},{"1":"H_Pylori_Infection","2":"numeric"},{"1":"Calcium_Intake","2":"numeric"},{"1":"Overall_Risk_Score","2":"numeric"},{"1":"BMI","2":"numeric"},{"1":"Physical_Activity_Level","2":"numeric"},{"1":"Risk_Level","2":"character"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>

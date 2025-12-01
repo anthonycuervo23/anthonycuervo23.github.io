@@ -109,7 +109,7 @@ Para tener una visión más sistemática, se obtiene el **tipo de dato** que R a
 ```{r}
 #| label: tipos-variables
 #| echo: true
-#| tbl-cap: "Tipos de datos (clase R) para cada variable del dataset."
+#| tbl-cap: "Tipos de datos para cada variable del dataset."
 
 tipos <- sapply(cancer, function(x) class(x)[1])
 
